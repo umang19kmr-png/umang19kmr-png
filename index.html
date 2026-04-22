@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umang Kumar — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0d1117;
+    --bg-panel: #161b22;
+    --bg-card: #1c2330;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent-soft: rgba(0,229,255,0.08);
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #484f58;
+    --border: rgba(0,229,255,0.15);
+    --border-soft: rgba(255,255,255,0.06);
+  }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: var(--bg-dark);
+    display: grid;
+    grid-template-columns: 72mm 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative top line */
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
+    z-index: 10;
+  }
+
+  /* ── LEFT SIDEBAR ── */
+  .sidebar {
+    background: var(--bg-panel);
+    padding: 36px 20px 30px;
+    border-right: 1px solid var(--border-soft);
+    position: relative;
+  }
+
+  .sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--accent) 0%, transparent 80%);
+  }
+
+  /* Avatar */
+  .avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -1px;
+    position: relative;
+  }
+
+  .avatar::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0.5;
+  }
+
+  /* Contact */
+  .contact-block { margin-bottom: 22px; }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    word-break: break-all;
+  }
+
+  .contact-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--accent);
+  }
+
+  .contact-item a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 10.5px;
+  }
+
+  /* Sidebar section headings */
+  .s-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .s-block { margin-bottom: 20px; }
+
+  /* Skills */
+  .skill-tag {
+    display: inline-block;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin: 2px 2px 2px 0;
+    font-family: 'DM Sans', monospace;
+    letter-spacing: 0.3px;
+  }
+
+  .skill-tag.soft {
+    background: rgba(124,58,237,0.1);
+    border-color: rgba(124,58,237,0.3);
+    color: #a78bfa;
+  }
+
+  /* Cert item */
+  .cert-item {
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-soft);
+    line-height: 1.4;
+  }
+
+  .cert-item:last-child { border-bottom: none; }
+
+  .cert-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 11px;
+  }
+
+  /* Languages */
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+
+  .lang-name { font-size: 11px; color: var(--text-secondary); }
+
+  .lang-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  .dot.filled { background: var(--accent); }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    padding: 36px 24px 30px 22px;
+  }
+
+  /* Name block */
+  .name-block { margin-bottom: 20px; }
+
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .name span { color: var(--accent); }
+
+  .role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .role-tag::before {
+    content: '';
+    width: 18px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  /* Section headings */
+  .section { margin-bottom: 20px; }
+
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sec-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* Summary */
+  .summary {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    padding: 12px 14px;
+    background: var(--bg-card);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Experience / Project cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    border-radius: 6px 0 0 6px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    gap: 8px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .card-sub {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .badge {
+    font-size: 9px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 2px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 6px;
+  }
+
+  .bullet-list li {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    padding: 2px 0 2px 14px;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .bullet-list li::before {
+    content: '›';
+    position: absolute;
+    left: 2px;
+    color: var(--accent);
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  /* Tech stack pills on projects */
+  .tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 7px;
+  }
+
+  .tech-pill {
+    font-size: 9.5px;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.25);
+    color: #c4b5fd;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-family: 'DM Sans', monospace;
+  }
+
+  /* Education */
+  .edu-card {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .edu-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .edu-school {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .edu-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* Achievement */
+  .ach-card {
+    background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(124,58,237,0.06));
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+
+  .ach-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .ach-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+
+  /* Print */
+  @media print {
+    body { background: var(--bg-dark) !important; }
+    .page { margin: 0; width: 210mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside class="sidebar">
+
+    <div class="avatar-wrap">
+      <div class="avatar">UK</div>
+    </div>
+
+    <!-- Contact -->
+    <div class="s-block">
+      <div class="s-heading">Contact</div>
+
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.4 11.27 19.79 19.79 0 01.37 2.68 2 2 0 012.34.5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.34a16 16 0 006.29 6.29l1.2-1.2a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.69 2.04z"/></svg>
+        +91 83718 03956
+      </div>
+
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        umang19kmr@gmail.com
+      </div>
+
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Delhi NCR, India
+      </div>
+
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <a href="https://www.linkedin.com/in/umang-kumar-51b0b33a9/" target="_blank">linkedin.com/in/umang-kumar</a>
+      </div>
+
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        <a href="https://github.com/umang19kmr-png" target="_blank">github.com/umang19kmr-png</a>
+      </div>
+    </div>
+
+    <!-- Technical Skills -->
+    <div class="s-block">
+      <div class="s-heading">Technical Skills</div>
+      <span class="skill-tag">Java</span>
+      <span class="skill-tag">C</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">HTML5</span>
+      <span class="skill-tag">CSS3</span>
+      <span class="skill-tag">DSA</span>
+      <span class="skill-tag">IoT</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Git</span>
+    </div>
+
+    <!-- Tools & Hardware -->
+    <div class="s-block">
+      <div class="s-heading">Tools & Hardware</div>
+      <span class="skill-tag">NodeMCU ESP8266</span>
+      <span class="skill-tag">DHT11 Sensor</span>
+      <span class="skill-tag">QR Systems</span>
+      <span class="skill-tag">OLED Display</span>
+      <span class="skill-tag">Arduino IDE</span>
+      <span class="skill-tag">VS Code</span>
+      <span class="skill-tag">GitHub</span>
+    </div>
+
+    <!-- Soft Skills -->
+    <div class="s-block">
+      <div class="s-heading">Core Competencies</div>
+      <span class="skill-tag soft">Problem Solving</span>
+      <span class="skill-tag soft">Team Leadership</span>
+      <span class="skill-tag soft">Fast Learner</span>
+      <span class="skill-tag soft">Critical Thinking</span>
+      <span class="skill-tag soft">Communication</span>
+    </div>
+
+    <!-- Languages -->
+    <div class="s-block">
+      <div class="s-heading">Languages</div>
+
+      <div class="lang-row">
+        <span class="lang-name">Hindi</span>
+        <div class="lang-dots">
+          <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+        </div>
+      </div>
+
+      <div class="lang-row">
+        <span class="lang-name">English</span>
+        <div class="lang-dots">
+          <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="s-block">
+      <div class="s-heading">Notable Exams</div>
+      <div class="cert-item">
+        <strong>NDA (National Defence Academy)</strong>
+        Written Exam Qualified
+      </div>
+      <div class="cert-item">
+        <strong>IMUCET</strong>
+        Indian Maritime University CET Qualified
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+  <main class="main">
+
+    <!-- Name -->
+    <div class="name-block">
+      <div class="name">Umang <span>Kumar</span></div>
+      <div class="role-tag">Full Stack Developer</div>
+    </div>
+
+    <!-- Summary -->
+    <div class="section">
+      <div class="sec-title">Professional Summary</div>
+      <div class="summary">
+        Highly motivated B.Tech Computer Science student at Gautam Buddha University (2025–2029) with a strong foundation in full-stack development, IoT systems, and data structures. Demonstrates practical engineering skills through real-world hardware-software integrated projects deployed in live environments. Recognized nationally through the NIDAR Drone Innovation Challenge organized by MeitY & DFI. Proven aptitude through competitive examination qualifications, reflecting exceptional discipline, analytical rigor, and technical acumen.
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="section">
+      <div class="sec-title">Projects</div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Automated Attendance System — QR Based</div>
+          <span class="badge">Academic</span>
+        </div>
+        <div class="card-sub">College Project · Attendance Automation</div>
+        <ul class="bullet-list">
+          <li>Engineered a QR code-driven attendance automation system, eliminating manual marking and reducing administrative overhead by an estimated 80%.</li>
+          <li>Developed dynamic QR generation and real-time scanning logic for accurate, tamper-resistant session-based attendance tracking.</li>
+          <li>Designed a streamlined backend to log and retrieve attendance records with timestamp precision.</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">HTML/CSS</span>
+          <span class="tech-pill">QR Libraries</span>
+          <span class="tech-pill">Backend Logic</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Automated Irrigation System — Soil Moisture Sensor</div>
+          <span class="badge">Deployed ✓</span>
+        </div>
+        <div class="card-sub">IoT Project · Live Deployment in Colony Garden</div>
+        <ul class="bullet-list">
+          <li>Designed and deployed a smart irrigation system currently operating in a residential colony garden, autonomously activating water supply based on real-time soil moisture readings.</li>
+          <li>Integrated NodeMCU ESP8266 with soil moisture sensors to trigger pump control, reducing water wastage through condition-based automation.</li>
+          <li>Successfully demonstrated IoT hardware-software integration in a live, real-world agricultural use case.</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-pill">NodeMCU ESP8266</span>
+          <span class="tech-pill">Soil Moisture Sensor</span>
+          <span class="tech-pill">C/Arduino</span>
+          <span class="tech-pill">IoT</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">IoT-Based Weather Station Kit</div>
+          <span class="badge">Hardware</span>
+        </div>
+        <div class="card-sub">IoT Project · Environmental Monitoring</div>
+        <ul class="bullet-list">
+          <li>Built a compact IoT weather monitoring station capturing real-time temperature and humidity data using DHT11 sensors with live display on an OLED screen.</li>
+          <li>Programmed NodeMCU ESP8266 to read, process, and render sensor data continuously, demonstrating embedded systems and firmware development skills.</li>
+          <li>Implemented efficient data rendering pipeline on constrained hardware using minimal memory footprint.</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-pill">DHT11 Sensor</span>
+          <span class="tech-pill">NodeMCU ESP8266</span>
+          <span class="tech-pill">OLED Display</span>
+          <span class="tech-pill">Arduino IDE</span>
+          <span class="tech-pill">C</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+      <div class="sec-title">Education</div>
+
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+          <div class="edu-school">Gautam Buddha University, Greater Noida</div>
+          <div class="edu-meta">2025 – 2029 &nbsp;·&nbsp; Currently Enrolled — First Year</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="section">
+      <div class="sec-title">Achievements & Recognition</div>
+
+      <div class="ach-card">
+        <div class="ach-title">🚁 NIDAR — National Innovation Challenge for Drone Application & Research</div>
+        <div class="ach-desc">
+          Participated in the prestigious national-level drone innovation challenge organized by the <strong style="color: var(--text-primary);">Drone Federation of India (DFI)</strong> in collaboration with the <strong style="color: var(--text-primary);">Ministry of Electronics & Information Technology (MeitY, Govt. of India)</strong> and USICT GBU. Demonstrated innovation, technical problem-solving, and applied engineering at a national government-backed platform.
+        </div>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-title">🎖 NDA — National Defence Academy Written Exam Qualified</div>
+        <div class="ach-desc">
+          Cracked the highly competitive NDA written examination conducted by UPSC — attempted by 400,000+ candidates nationally — reflecting outstanding analytical ability, discipline, and intellectual rigor beyond the engineering curriculum.
+        </div>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-title">⚓ IMUCET — Indian Maritime University Common Entrance Test Qualified</div>
+        <div class="ach-desc">
+          Qualified the IMUCET entrance examination, demonstrating strong aptitude in physics, mathematics, and reasoning — highly competitive national-level assessment.
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
